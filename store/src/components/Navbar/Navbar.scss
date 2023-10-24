@@ -19,12 +19,14 @@
       color: rgb(9, 9, 92);
     }
 
+
     .left{
       display: flex;
       align-items: center;
       gap: 15px;
     }
 
+  }
     .center {
       display: flex;
       align-items: center;
@@ -62,5 +64,4 @@
           }
       }
     }
-  }
 }
