@@ -1,63 +1,81 @@
-import React from 'react'
-import "./FeaturedProducts.scss"
-import Card from '../Card/Card'
+import React from 'react';
+import Card from '../Card/Card';
+import "./FeaturedProducts.scss";
+import useFetch from '../../hooks/useFetch';
 
-const FeaturedProducts = ({type}) => {
-
-  const data = [
-  {
-    id: 1,
-    img: "https://i.postimg.cc/26RB3qNM/3.png",
-    img2: "https://postimg.cc/CRydZ2Xk",
-    title: "TEST DE ISHIHARA JAPONÉS AÑO 2023",
-    isNew: true,
-    oldPrice: 780,
-    price:  650,
-  },
-  {
-    id: 2,
-    img: "https://i.postimg.cc/T3g7pDzv/1.png",
-    title: "CRÁNEO, CEREBRO Y VERTEBRAS CERVICALES",
-    isNew: true,
-    oldPrice: 470,
-    price:  385,
-  },
-  {
-    id: 3,
-    img: "https://i.postimg.cc/XY55WKTd/2.png",
-    title: "TORSO HUMANO BISEXUAL DE 21 PIEZAS IMANTADO",
-    isNew: true,
-    oldPrice: 700,
-    price:  620,
-  },
-  {
-    id: 4,
-    img: "https://i.postimg.cc/kGnrJy14/1.png",
-    title: "MAQUETA DEL OÍDO 1.5x CON LÁMINA",
-    isNew: true,
-    oldPrice: 240,
-    price:  180,
-  },
-
-  ]
+const FeaturedProducts = ({ type }) => {
+  const { data, loading, error } = useFetch(
+    `/products?populate=*&[filters][type][$eq]=${type}`
+  );
 
   return (
-    <div className='featuredProducts'>
-      
-      <div className='top'>
+    <div className="featuredProducts">
+      <div className="top">
         <h1>{type} products</h1>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid quaerat adipisci id impedit neque nisi dolorem sequi eveniet fuga quidem corporis inventore, ratione deleniti deserunt reiciendis soluta delectus facilis libero?
-
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum
+          suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan
+          lacus vel facilisis labore et dolore magna aliqua. Quis ipsum
+          suspendisse ultrices gravida. Risus commodo viverra maecenas.
         </p>
       </div>
-      <div className='bottom'>
-        {data.map(item=>(
-          <Card item={item} key={item.id}/>
-        ))}
+      <div className="bottom">
+        {error
+          ? "Something went wrong!"
+          : loading
+          ? "loading"
+          : data?.map((item) => <Card item={item} key={item.id} />)}
       </div>
-
     </div>
-  )
-}
+  );
+};
 
-export default FeaturedProducts
+export default FeaturedProducts;
+
+
+
+// import axios from 'axios';
+
+// const FeaturedProducts = ({type}) => {
+
+//   const [data, setData] = useState([]);
+
+//     useEffect(()=>{
+//       const fetchData = async ()=> {
+//         try{
+//           const res = await axios.get(process.env.REACT_APP_API_URL+"/products", 
+//           {
+//             headers: {
+//               Authorization: "bearer "+ process.env.REACT_APP_API_TOKEN,
+//             },
+//           }
+//           );
+//           setData(res.data.data)
+//         }catch(err){
+//           console.log(err);
+//         }
+//       };
+//       fetchData();
+//     },[]);
+
+//   return (
+//     <div className='featuredProducts'>
+      
+//       <div className='top'>
+//         <h1>{type} products</h1>
+//         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid quaerat adipisci id impedit neque nisi dolorem sequi eveniet fuga quidem corporis inventore, ratione deleniti deserunt reiciendis soluta delectus facilis libero?
+
+//         </p>
+//       </div>
+//       <div className='bottom'>
+//         {data.map((item)=>(
+//           <Card item={item} key={item.id}/>
+//         ))}
+//       </div>
+
+//     </div>
+//   );
+// };
+
+// export default FeaturedProducts
